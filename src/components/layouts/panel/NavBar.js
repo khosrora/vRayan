@@ -1,16 +1,21 @@
 import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { logOut } from '../../../redux/actions/authAction';
-
-
+import { logOut, refreshToken } from '../../../redux/actions/authAction';
 
 const NavBar = ({ setMenu, menu }) => {
 
-    const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
-    const [user] = useState(auth.user)
+    const id = auth.userId;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(refreshToken(id));
+    }, [dispatch])
+    // const [user] = useState(auth.user)
 
+    const handleDelete = (e) => {
+        dispatch(logOut())
+    }
     return (
         <nav className="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
             <div className="container-fluid">
@@ -24,7 +29,7 @@ const NavBar = ({ setMenu, menu }) => {
                     <div className="navbar-nav align-items-center">
                         <div className="nav-item navbar-search-wrapper mb-0">
                             <a className="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                                <span className="d-none d-md-inline-block text-muted">{user.name} عزیز خوش آمدید</span>
+                                <span className="d-none d-md-inline-block text-muted"> عزیز خوش آمدید</span>
                             </a>
                         </div>
                     </div>
@@ -212,7 +217,9 @@ const NavBar = ({ setMenu, menu }) => {
                                                 </div>
                                             </div>
                                             <div className="">
-                                                <span className="fw-semibold d-block">{user.username}</span>
+                                                <span className="fw-semibold d-block">
+                                                    {/* {user.username} */}
+                                                </span>
                                             </div>
                                         </div>
                                     </a>
@@ -220,8 +227,8 @@ const NavBar = ({ setMenu, menu }) => {
                                 <li>
                                     <div className="dropdown-divider"></div>
                                 </li>
-                                <li className='cursor-pointer' onClick={() => dispatch(logOut())} >
-                                    <a className="dropdown-item ">
+                                <li className='cursor-pointer'  >
+                                    <a className="dropdown-item" role="button" onClick={handleDelete} >
                                         <i className="bx bx-power-off me-2"></i>
                                         <span className="align-middle">خروج</span>
                                     </a>

@@ -1,32 +1,35 @@
 import { errorMessage, successMessage } from '../../utils/toast';
-import { postDataAPI } from './../../utils/fetchData';
+import { getDataAPI, postDataAPI } from './../../utils/fetchData';
 import { GLOBALTYPES } from './globalTypes';
 import Cookies from 'js-cookie';
 
 
-export const registerUser = data => async dispatch => {
+export const checkOtp = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI("auth/register", data);
+        const res = await postDataAPI("Auth/Verify", data);
         console.log(res);
-        if (res.status === 201) successMessage("ثبت نام موفقیت آمیز بود");
+        if (res.status === 200) {
+            successMessage("ورود شما موفقیت آمیز بود");
+            Cookies.set("token__V_Rayan", res.data.token);
+            Cookies.set("id__V_Rayan", res.data.id);
+            dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { token: res.data.token, id: res.data.id } });
+        }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
-        if (err) errorMessage("لطفا دوباره امتحان کنید");
+        if (err) errorMessage("لطفا در وارد کردن کد دقت کنید");
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     }
 }
 
-export const loginUser = data => async dispatch => {
+export const getOtp = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI("auth/login", data);
-        if (res.data.access_token) {
+        const res = await postDataAPI("Auth/Login", data);
+        if (res.status === 200) {
             successMessage("ورود موفقیت آمیز بود");
-            Cookies.set('firstLogin', JSON.stringify(res.data.user));
-            Cookies.set('accToken', res.data.access_token);
+            dispatch({ type: GLOBALTYPES.USER, payload: { getOtp: true } })
         }
-        dispatch({ type: GLOBALTYPES.USER, payload: { data: res.data.user, accessToken: res.data.access_token } })
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         console.log(err);
@@ -35,18 +38,16 @@ export const loginUser = data => async dispatch => {
     }
 }
 
-export const refreshUser = () => async dispatch => {
-    const user = JSON.parse(Cookies.get("firstLogin"));
-    const accessToken = Cookies.get("accToken");
+export const refreshToken = (id, token) => async dispatch => {
     try {
-        if (user) {
-            dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-            dispatch({ type: GLOBALTYPES.USER, payload: { data: user, accessToken } })
-            dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
-        }
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        const res = await getDataAPI(`Customer/${id}`);
+        console.log(res);
+        dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { userDetails: res.data, token, id } })
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
-        if (err.response.status) errorMessage("لطفا ابتدا وارد وب سایت شوید");
-        dispatch({ type: GLOBALTYPES.USER, payload: { data: null } })
+        console.log(err);
+        if (err.response.status) errorMessage("لطفا ابتدا ثبت نام کنید");
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     }
 }
@@ -54,9 +55,9 @@ export const refreshUser = () => async dispatch => {
 export const logOut = () => dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        Cookies.remove('firstLogin');
-        Cookies.remove('accToken');
-        dispatch({ type: GLOBALTYPES.USER, payload: { data: null } });
+        Cookies.remove("token__V_Rayan");
+        Cookies.remove("id__V_Rayan");
+        dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { userDetails: null, token: null, id: null } })
         errorMessage("عملیات خروج انجام شد");
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {

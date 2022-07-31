@@ -1,8 +1,20 @@
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-
+import Cookies from 'js-cookie';
+import { useDispatch } from 'react-redux';
+import { refreshToken } from '../../../redux/actions/authAction';
 
 
 const LayoutAuth = () => {
+
+    const id = Cookies.get("id__V_Rayan");
+    const accessToken = Cookies.get("token__V_Rayan");
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (id) dispatch(refreshToken(id, accessToken))
+    }, []);
+
     return (
         <div className="authentication-wrapper authentication-cover">
             <div className="authentication-inner row m-0">
