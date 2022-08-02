@@ -1,13 +1,17 @@
 import { GLOBALTYPES } from './globalTypes';
-import { postDataAPI, putDataAPI, tokenUser } from './../../utils/fetchData';
+import { postDataAPI, putDataAPI } from './../../utils/fetchData';
+import { successMessage } from '../../utils/toast';
 
 
-const token = `Bearer ${tokenUser}`
 
-export const editUserAction = data => async dispatch => {
+export const completeProfile = data => async dispatch => {
     try {
+        console.log(data);
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await putDataAPI(`auth/edite-profile/${data.id}`, data, token);
+        const res = await postDataAPI(`Customer/edit`, data);
+        if (res.status === 200) {
+            successMessage(res.data.message);
+        }
         console.log(res);
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {

@@ -8,7 +8,6 @@ export const checkOtp = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI("Auth/Verify", data);
-        console.log(res);
         if (res.status === 200) {
             successMessage("ورود شما موفقیت آمیز بود");
             Cookies.set("token__V_Rayan", res.data.token);
@@ -42,7 +41,6 @@ export const refreshToken = (id, token) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await getDataAPI(`Customer/${id}`);
-        console.log(res);
         dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { userDetails: res.data, token, id } })
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {

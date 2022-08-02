@@ -11,7 +11,6 @@ const NavBar = ({ setMenu, menu }) => {
     useEffect(() => {
         dispatch(refreshToken(id));
     }, [dispatch])
-    // const [user] = useState(auth.user)
 
     const handleDelete = (e) => {
         dispatch(logOut())
