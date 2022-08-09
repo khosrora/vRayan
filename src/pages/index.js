@@ -21,6 +21,7 @@ import Login from "./auth/login";
 import Dashboard from "./public/dashboard";
 import UserDetails from "./public/UserDetails";
 import Categories from "./public/categories";
+import Contacts from "./public/Contacts";
 
 
 const Index = () => {
@@ -52,6 +53,7 @@ const Index = () => {
                             <Route path='/dashboard' element={<Dashboard />} />
                             <Route path='/userDetails' element={<UserDetails />} />
                             <Route path='/create-categories' element={<Categories />} />
+                            <Route path='/create-contacts' element={<Contacts />} />
                         </Route>
                 }
                 {

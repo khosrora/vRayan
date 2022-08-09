@@ -50,11 +50,11 @@ export const deleteCategory = (id, customerID) => async dispatch => {
 export const editCategory = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOAD_CATEGORIES, payload: { load: true } });
-        const res = await postDataAPI(`Category/Edit`, { name: data.name });
+        const res = await postDataAPI(`Category/Edit`, data);
         if (res.status === 200) {
-            successMessage(res.data[0]);
+            successMessage(res.data.message);
+            dispatch({ type: GLOBALTYPES.EDIT_CATEGORY, payload: { category: res.data.value } })
         }
-        dispatch({ type: GLOBALTYPES.EDIT_CATEGORY, payload: { category: res.data[1], id: data.id } })
         dispatch({ type: GLOBALTYPES.LOAD_CATEGORIES, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOAD_CATEGORIES, payload: { load: false } });

@@ -17,7 +17,7 @@ const EditCategory = ({ dataEdit, setEdit }) => {
     const { auth } = useSelector(state => state);
     const customerId = auth.userId;
     const dispatch = useDispatch();
-
+    
     return (
         <Formik
             initialValues={{

@@ -2,13 +2,13 @@ import { errorMessage, successMessage } from '../../utils/toast';
 import { deleteDataAPI, getDataAPI, postDataAPI, putDataAPI, tokenUser } from './../../utils/fetchData';
 import { GLOBALTYPES } from './globalTypes';
 
-const token = `Bearer ${tokenUser}`
 
-export const getContacts = () => async dispatch => {
+
+export const getContacts = (customerId, category) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await getDataAPI('auth/contacts', token);
-        dispatch({ type: GLOBALTYPES.GET_CONTACTS, payload: { contacts: res.data.contacts } });
+        const res = await getDataAPI(`Audience?customerId=${customerId}&category=${category}`)
+        dispatch({ type: GLOBALTYPES.GET_CONTACTS, payload: { contacts: res.data } });
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
@@ -21,28 +21,27 @@ export const getContacts = () => async dispatch => {
 export const addContact = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI("auth/contacts", data, token);
+        const res = await postDataAPI("Audience", data);
         console.log(res);
         if (res.status === 200) {
-            dispatch({ type: GLOBALTYPES.ADD_CONTACTS, payload: { contacts: res.data[1] } });
-            successMessage(res.data[0]);
+            successMessage(res.data.message);
+            dispatch({ type: GLOBALTYPES.ADD_CONTACTS, payload: { contacts: res.data.value } });
         };
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
-        errorMessage("لطفا دوباره امتحان کنید");
+        errorMessage(err.response.data);
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     }
 }
 
-export const deleteUser = id => async dispatch => {
+export const deleteUser = (customerId, id) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await deleteDataAPI(`auth/contacts/${id}`, token);
+        const res = await postDataAPI(`Audience/Delete/${id}/${customerId}`);
         if (res.status === 200) {
-            successMessage(res.data);
-            dispatch({ type: GLOBALTYPES.DELETE_CONTACTS, payload: { id } });
+            successMessage(res.data.message);
+            dispatch({ type: GLOBALTYPES.DELETE_CONTACTS, payload: { id: res.data.value.id } });
         }
-        console.log(res);
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         errorMessage("لطفا دوباره امتحان کنید");
@@ -53,11 +52,11 @@ export const deleteUser = id => async dispatch => {
 export const editUserContact = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await putDataAPI(`auth/contacts/${data.id}`, data, token);
+        const res = await postDataAPI(`Audience/edit`, data);
         console.log(res);
         if (res.status === 200) {
-            successMessage(res.data);
-            dispatch({ type: GLOBALTYPES.EDIT_CONTACTS, payload: { contacts: res.data[1], id: data.id } })
+            successMessage(res.data.message);
+            dispatch({ type: GLOBALTYPES.EDIT_CONTACTS, payload: { contacts: res.data.value } })
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {

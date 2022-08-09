@@ -28,7 +28,7 @@ const contactsReducer = (state = initialState, action) => {
         case GLOBALTYPES.EDIT_CONTACTS:
             return {
                 ...state,
-                allContacts: EditData(state.allContacts, action.payload.id, action.payload.contacts)
+                allContacts: EditData(state.allContacts, action.payload.contacts.id, action.payload.contacts)
             }
         default:
             return state;

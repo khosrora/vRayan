@@ -26,7 +26,7 @@ const categoriesReducer = (state = initialState, action) => {
         case GLOBALTYPES.EDIT_CATEGORY:
             return {
                 ...state,
-                allCategories: EditData(state.allCategories, action.payload.id, action.payload.category)
+                allCategories: EditData(state.allCategories, action.payload.category.id, action.payload.category)
             }
         default:
             return state;

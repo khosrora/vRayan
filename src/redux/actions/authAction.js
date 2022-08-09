@@ -10,8 +10,8 @@ export const checkOtp = data => async dispatch => {
         const res = await postDataAPI("Auth/Verify", data);
         if (res.status === 200) {
             successMessage("ورود شما موفقیت آمیز بود");
-            Cookies.set("token__V_Rayan", res.data.token);
-            Cookies.set("id__V_Rayan", res.data.id);
+            Cookies.set("token__V_Rayan", res.data.token, { expires: 7 });
+            Cookies.set("id__V_Rayan", res.data.id, { expires: 7 });
             dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { token: res.data.token, id: res.data.id } });
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
