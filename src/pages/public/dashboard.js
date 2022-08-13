@@ -1,5 +1,7 @@
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { changeImage } from '../../redux/actions/userAction';
 import Moment from '../../utils/moment';
 
 
@@ -7,7 +9,11 @@ import Moment from '../../utils/moment';
 const Dashboard = () => {
 
     const { auth } = useSelector(state => state);
+    const dispatch = useDispatch();
     const user = auth.user;
+    const customerId = auth.userId;
+
+    const [selectedImage, setSelectedImage] = useState(null);
 
     return (
         <div class="content-wrapper">
@@ -16,9 +22,20 @@ const Dashboard = () => {
                     <div class="user-profile-header-banner">
                         <img src="../../assets/img/pages/profile-banner.png" alt="Banner image" class="rounded-top" />
                     </div>
-                    <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
+                    <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4 position-relative">
                         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto cursor-pointer">
-                            <img src="../../assets/img/avatars/1.png" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
+                            <img src={user.logo === null ? '../../assets/img/avatars/1.png' : user.logo  } alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
+                            <label for="upload" className="btn btn-secondary me-2 mb-4 m-2" tabindex="0">
+                                <span class="d-none d-sm-block">ارسال تصویر جدید</span>
+                                <i class="bx bx-upload d-block d-sm-none"></i>
+                                <input onChange={(e) => {
+                                    setSelectedImage(e.target.files[0]);
+                                    const formData = new FormData();
+                                    formData.append("logoFile", selectedImage);
+                                    formData.append("id", customerId);
+                                    dispatch(changeImage(formData));
+                                }} type="file" id="upload" className="account-file-input" hidden accept="image/png, image/jpeg" />
+                            </label>
                         </div>
                         <div class="flex-grow-1 mt-3 mt-sm-5">
                             <div class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
@@ -29,12 +46,12 @@ const Dashboard = () => {
                                         </Link>
                                     }
                                     <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
-                                        <li class="list-inline-item fw-semibold"><i class="bx bx-phone"></i>{user?.mobile ? user?.mobile : "در حال دریافت اطلاعات" }</li>
+                                        <li class="list-inline-item fw-semibold"><i class="bx bx-phone"></i>{user?.mobile ? user?.mobile : "در حال دریافت اطلاعات"}</li>
                                         <li class="list-inline-item fw-semibold">
                                             <i class="bx bx-calendar-alt"></i>
                                             عضویت در تاریخ
                                             {" "}
-                                            <Moment date={user?.creationDate ? user?.creationDate  : 'در حال دریافت اطلاعات' } />
+                                            <Moment date={user?.creationDate ? user?.creationDate : 'در حال دریافت اطلاعات'} />
                                         </li>
                                     </ul>
                                 </div>

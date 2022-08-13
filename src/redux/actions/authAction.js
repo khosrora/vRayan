@@ -26,13 +26,12 @@ export const getOtp = data => async dispatch => {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI("Auth/Login", data);
         if (res.status === 200) {
-            successMessage("ورود موفقیت آمیز بود");
+            successMessage(res.data);
             dispatch({ type: GLOBALTYPES.USER, payload: { getOtp: true } })
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         console.log(err);
-        if (err.response.status) errorMessage("لطفا ابتدا ثبت نام کنید");
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     }
 }

@@ -22,6 +22,7 @@ import Dashboard from "./public/dashboard";
 import UserDetails from "./public/UserDetails";
 import Categories from "./public/categories";
 import Contacts from "./public/Contacts";
+import CreateMeeting from "./public/createMeet";
 
 
 const Index = () => {
@@ -54,6 +55,7 @@ const Index = () => {
                             <Route path='/userDetails' element={<UserDetails />} />
                             <Route path='/create-categories' element={<Categories />} />
                             <Route path='/create-contacts' element={<Contacts />} />
+                            <Route path='/create-meeting' element={<CreateMeeting />} />
                         </Route>
                 }
                 {

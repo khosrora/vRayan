@@ -28,7 +28,7 @@ const NavBar = ({ setMenu, menu }) => {
                     <div className="navbar-nav align-items-center">
                         <div className="nav-item navbar-search-wrapper mb-0">
                             <a className="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                                <span className="d-none d-md-inline-block text-muted"> عزیز خوش آمدید</span>
+                                <span className="d-none d-md-inline-block text-muted"> {auth.user.firstName} عزیز خوش آمدید</span>
                             </a>
                         </div>
                     </div>
