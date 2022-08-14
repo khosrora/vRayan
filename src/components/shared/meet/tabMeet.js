@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
@@ -11,6 +11,7 @@ import persian_fa from "react-date-object/locales/persian_fa"
 import "react-multi-date-picker/styles/layouts/mobile.css"
 import weekends from "react-multi-date-picker/plugins/highlight_weekends"
 import DatePickerHeader from "react-multi-date-picker/plugins/date_picker_header"
+import { createMeet } from '../../../redux/actions/meetAction';
 
 
 const addMeetValidation = Yup.object().shape({
@@ -19,11 +20,11 @@ const addMeetValidation = Yup.object().shape({
 
 const TabMeet = () => {
 
-    const { auth } = useSelector(state => state);
+    const { auth, global } = useSelector(state => state);
     const userId = auth.userId;
     const [date, setDate] = useState();
     const [time, setTime] = useState();
-
+    const dispatch = useDispatch();
 
     return (
         <div className="col-12">
@@ -50,7 +51,7 @@ const TabMeet = () => {
                     }
                     values.startTime = `${time.toDate().getHours()}:${time.toDate().getMinutes()}`;
                     values.startDate = date.toDate().toLocaleDateString('en-US');
-                    console.log(values);
+                    dispatch(createMeet(values));
                 }}
             >{({ errors, touched }) => (
                 <Form>
@@ -175,8 +176,10 @@ const TabMeet = () => {
                             </div>
                         </div>
                         <div className="container">
-                            <button type='submit' className="btn btn-secondary mb-3 text-nowrap add-new-role">
-                                ایجاد جلسه
+                            <button type='submit' disabled={global.load} className="btn btn-secondary mb-3 text-nowrap add-new-role">
+                                {
+                                    global.load ? "در حال ارسال اطلاعات" : "ایجاد جلسه"
+                                }
                             </button>
                         </div>
                     </div>

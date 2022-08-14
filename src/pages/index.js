@@ -23,6 +23,9 @@ import UserDetails from "./public/UserDetails";
 import Categories from "./public/categories";
 import Contacts from "./public/Contacts";
 import CreateMeeting from "./public/createMeet";
+import MeetsUser from "./public/meetsUser";
+import Meet from "./public/meet";
+import LayoutMeet from "../components/layouts/layoutMeet/LayoutMeet";
 
 
 const Index = () => {
@@ -50,13 +53,19 @@ const Index = () => {
                             element={<Navigate to="/" replace />}
                         />
                         :
-                        <Route element={<Layout />} >
-                            <Route path='/dashboard' element={<Dashboard />} />
-                            <Route path='/userDetails' element={<UserDetails />} />
-                            <Route path='/create-categories' element={<Categories />} />
-                            <Route path='/create-contacts' element={<Contacts />} />
-                            <Route path='/create-meeting' element={<CreateMeeting />} />
-                        </Route>
+                        <>
+                            <Route element={<Layout />} >
+                                <Route path='/dashboard' element={<Dashboard />} />
+                                <Route path='/userDetails' element={<UserDetails />} />
+                                <Route path='/create-categories' element={<Categories />} />
+                                <Route path='/create-contacts' element={<Contacts />} />
+                                <Route path='/create-meeting' element={<CreateMeeting />} />
+                                <Route path='/all-meetings' element={<MeetsUser />} />
+                            </Route>
+                            <Route element={<LayoutMeet />}>
+                                <Route path='/check-meet/:id' element={<Meet />} />
+                            </Route>
+                        </>
                 }
                 {
                     auth.accessToken === null ?

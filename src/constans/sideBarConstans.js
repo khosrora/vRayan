@@ -21,7 +21,7 @@ export const sideBarConstans = [
     },
     {
         icon: "menu-icon tf-icons bx bx-spreadsheet",
-        route: "/meetings",
+        route: "/all-meetings",
         title: "لیست جلسات",
     },
     {
