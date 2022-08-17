@@ -63,8 +63,12 @@ const UsersTable = ({ filter, setEditUser }) => {
                                                 <td><span className="badge bg-label-secondary">{i.mobile}</span></td>
                                                 <td><span className="badge bg-label-secondary">{i.position}</span></td>
                                                 <td>
-                                                    <span onClick={() => handleDelete(i.id)} className="badge bg-label-danger me-1 cursor-pointer">حذف</span>
-                                                    <span onClick={() => setEditUser(i)} className="badge bg-label-primary me-1 cursor-pointer">ویرایش</span>
+                                                    <span onClick={() => handleDelete(i.id)} className="badge bg-label-danger rounded mx-2 p-2 cursor-pointer">
+                                                        <i className="bx bx-trash bx-xs"></i>
+                                                    </span>
+                                                    <span onClick={() => setEditUser(i)} className="badge bg-label-secondary rounded p-2 cursor-pointer">
+                                                        <i className="bx bx-pencil bx-xs"></i>
+                                                    </span>
                                                 </td>
                                             </tr>
                                             :

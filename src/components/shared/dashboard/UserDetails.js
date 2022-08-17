@@ -1,18 +1,18 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { completeProfile } from '../../redux/actions/userAction';
+import { completeProfile } from '../../../redux/actions/userAction';
 
 const EditUserValidation = Yup.object().shape({
     firstName: Yup.string().min(2, "نام انتخاب شده کوتاه است").max(100, "نام انتخاب شده بیش از حد بزرگ است").required("وارد کردن نام ضروری است"),
     lastName: Yup.string().min(2, "نام خانوادگی انتخاب شده کوتاه است").max(100, "نام خانوادگی انتخاب شده بیش از حد بزرگ است").required("وارد کردن نام خانوادگی ضروری است"),
-    mobile: Yup.string().matches("^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}", "شماره همراه وارد شده نامعتبر است").required("وارد کردن شماره همراه ضروری است"),
+    // mobile: Yup.string().matches("^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}", "شماره همراه وارد شده نامعتبر است").required("وارد کردن شماره همراه ضروری است"),
     email: Yup.string().email("پست الکترونیک وارد شده معتبر نیست").required("وارد کردن پست الکترونیک ضروری است"),
 });
 
 
 
-const UserDetails = () => {
+const UserDetails = ({ setEdit }) => {
 
     const dispatch = useDispatch();
     const { auth } = useSelector(state => state);
@@ -29,12 +29,13 @@ const UserDetails = () => {
                             id,
                             firstName: '',
                             lastName: '',
-                            mobile: '',
+                            mobile: user?.mobile,
                             email: '',
                         }}
                         validationSchema={EditUserValidation}
                         onSubmit={values => {
                             dispatch(completeProfile(values));
+                            setEdit(false)
                         }}
                     >
                         {({ errors, touched }) => (
@@ -53,7 +54,6 @@ const UserDetails = () => {
                                     <div className="col-md-6">
                                         <label className="form-label" htmlFor="email">پست الکترونیک</label>
                                         <div className="input-group input-group-merge">
-                                            <span className="input-group-text" id="email" dir="ltr">@example.com</span>
                                             <Field placeholder={user?.email} type="text" id="email" name='email' className="form-control text-start" dir="ltr" aria-label="john.doe" aria-describedby="multicol-email2" />
                                         </div>
                                         {errors.email && touched.email ? <span className='text-danger'>{errors.email}</span> : null}
@@ -62,7 +62,7 @@ const UserDetails = () => {
                                         <div className="form-password-toggle">
                                             <label className="form-label" htmlFor="mobile">شماره تماس</label>
                                             <div className="input-group input-group-merge">
-                                                <Field placeholder={user?.mobile} type="tel" id="mobile" name='mobile' className="form-control text-start" dir="ltr" aria-describedby="multicol-password2" />
+                                                <Field value={user?.mobile} type="tel" id="mobile" name='mobile' className="form-control text-start" dir="ltr" aria-describedby="multicol-password2" />
                                                 <span className="input-group-text cursor-pointer" id="mobile"><i className="bx bx-mobile"></i></span>
                                             </div>
                                             {errors.mobile && touched.mobile ? <span className='text-danger'>{errors.mobile}</span> : null}

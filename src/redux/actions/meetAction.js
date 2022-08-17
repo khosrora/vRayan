@@ -37,12 +37,11 @@ export const getMeets = (customerId) => async dispatch => {
 export const deleteMeet = (customerId, id) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI(`Meeting/${customerId}/${id}`);
-        console.log(res);
-        // if (res.status === 200) {
-        //     successMessage(res.data);
-        //     dispatch({ type: GLOBALTYPES.DELETE_MEET, payload: { id } });
-        // }
+        const res = await postDataAPI(`Meeting/delete/${customerId}/${id}`);
+        if (res.status === 200) {
+            successMessage(res.data);
+            dispatch({ type: GLOBALTYPES.DELETE_MEET, payload: { id } });
+        }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
@@ -67,10 +66,11 @@ export const addUserToMeet = data => async dispatch => {
 export const addMasterToMeet = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI('auth/sessions/setostad', data, token);
-        if (res.status === 200) {
-            successMessage(res.data[0]);
-        }
+        const res = await postDataAPI(`Meeting/audiences/${data.meetingId}`, data);
+        console.log(res);
+        // if (res.status === 200) {
+        //     successMessage(res.data[0]);
+        // }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });

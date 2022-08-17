@@ -37,22 +37,9 @@ const CreateUser = () => {
                     }}
                     validationSchema={createUserValidation}
                     onSubmit={values => {
-                        Swal.fire({
-                            title: 'آیا مطمئن هستید ؟',
-                            text: "بعد از اضافه کردن کاربر میتوانید حذف و ویرایش کنید",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'بله اضافه کن',
-                            cancelButtonText: 'منصرف شدم'
-                        }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                values.userId = id;
-                                values.categoryId = select;
-                                dispatch(addContact(values))
-                            }
-                        });
+                        values.userId = id;
+                        values.categoryId = select;
+                        dispatch(addContact(values))
                     }}
                 >
                     {({ errors, touched }) => (

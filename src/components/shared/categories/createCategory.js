@@ -27,20 +27,7 @@ const CreateCategory = () => {
             }}
             validationSchema={createCategoryValidation}
             onSubmit={values => {
-                Swal.fire({
-                    title: 'آیا مطمئن هستید ؟',
-                    text: "بعد از ساخت دسته بندی میتوانید حذف و ویرایش کنید",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'بله اضافه کن',
-                    cancelButtonText: 'منصرف شدم'
-                }).then(async (result) => {
-                    if (result.isConfirmed) {
-                        dispatch(createCategory(values));
-                    }
-                })
+                dispatch(createCategory(values));
             }}
         >
             {({ errors, touched }) => (
@@ -65,7 +52,7 @@ const CreateCategory = () => {
                     </div>
                 </Form>
             )}
-        </Formik>
+        </Formik >
     );
 }
 

@@ -3,18 +3,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { changeImage } from '../../redux/actions/userAction';
 import Moment from '../../utils/moment';
+import UserDetails from '../../components/shared/dashboard/UserDetails';
 
 
 
 const Dashboard = () => {
 
+    const [edit, setEdit] = useState(false)
     const { auth } = useSelector(state => state);
     const dispatch = useDispatch();
     const user = auth.user;
     const customerId = auth.userId;
 
     const [selectedImage, setSelectedImage] = useState(null);
-
+    
     return (
         <div class="content-wrapper">
             <div class="container-xxl flex-grow-1 container-p-y">
@@ -24,7 +26,7 @@ const Dashboard = () => {
                     </div>
                     <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4 position-relative">
                         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto cursor-pointer">
-                            <img src={user.logo === null ? '../../assets/img/avatars/1.png' : user.logo  } alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
+                            <img src={user.logo === null ? '../../assets/img/avatars/1.png' : user.logo} alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
                             <label for="upload" className="btn btn-secondary me-2 mb-4 m-2" tabindex="0">
                                 <span class="d-none d-sm-block">ارسال تصویر جدید</span>
                                 <i class="bx bx-upload d-block d-sm-none"></i>
@@ -55,16 +57,19 @@ const Dashboard = () => {
                                         </li>
                                     </ul>
                                 </div>
-                                <Link to="/userDetails">
-                                    <p class="btn btn-secondary text-nowrap">
+                                <div>
+                                    <p onClick={() => setEdit(!edit)} class="btn btn-secondary text-nowrap">
                                         <i class="bx bx-user-check"></i>
-                                        ویرایش اطلاعات کاربری
+                                        {edit ? "انصراف از ویرایش" : "ویرایش اطلاعات کاربری"}
                                     </p>
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                {
+                    edit ? <UserDetails setEdit={setEdit} /> : null
+                }
             </div>
         </div >
     );
