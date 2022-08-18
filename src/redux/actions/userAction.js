@@ -22,14 +22,15 @@ export const completeProfile = data => async dispatch => {
 }
 
 export const changeImage = data => async dispatch => {
+    const id = Cookies.get("id__V_Rayan");
+    const token = Cookies.get("token__V_Rayan");
     try {
-        console.log(data);
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI(`Customer/editLogo`, data);
-        console.log(res);
-        // if (res.status === 200) {
-        //     successMessage(res.data.message);
-        // }
+        if (res.status === 200) {
+            successMessage(res.data.message);
+            dispatch({ type: GLOBALTYPES.GET_ACCSESS_TOKEN, payload: { userDetails: res.data.value, token, id } })
+        }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         console.log(err);

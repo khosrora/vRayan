@@ -16,6 +16,17 @@ const MeetsUser = () => {
     const sessions = meets.allMeets;
     const dispatch = useDispatch();
 
+    function Situation({ type }) {
+        switch (type) {
+            case 0:
+                return <span className="badge bg-label-primary cursor-pointer">در انتظار شروع</span>
+            case 1:
+                return <span className="badge bg-label-success cursor-pointer">شروع شده است</span>
+            case 2:
+                return <span className="badge bg-label-danger cursor-pointer">پایان جلسه</span>
+        }
+    }
+
     useEffect(() => {
         dispatch(getMeets(userId))
     }, []);
@@ -54,6 +65,8 @@ const MeetsUser = () => {
         });
     }
 
+
+
     return (
         <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
@@ -85,14 +98,18 @@ const MeetsUser = () => {
                                                         <td><span className="badge bg-label-secondary">{i.persianCreationDate}</span></td>
                                                         <td><span className="badge bg-label-secondary">{i.startTime}</span></td>
                                                         <td>
-                                                            <span className="badge bg-label-primary cursor-pointer">شروع جلسه</span>
+                                                            <Situation type={i.status} />
                                                         </td>
                                                         <td>
                                                             <i onClick={() => handleDelete(userId, i.id)} className="align-middle fmenu-icon tf-icons bx bx-trash text-danger me-3 cursor-pointer"></i>
-                                                            <Link to={`/add-users-meet/${i.id}`} className="badge bg-label-secondary me-1 cursor-pointer">افزودن مخاطب</Link>
-                                                            {/* <a href={`https://video.videorayan.com/${i.sess_token}`} target="_blank" className='badge bg-label-warning cursor-pointer'>برو به جلسه</a> */}
-                                                            <Link to={`/check-meet/${i.id}`} className='badge bg-label-warning cursor-pointer'>برو به جلسه</Link>
-                                                            <span className='badge bg-label-success cursor-pointer' onClick={() => handleSendSms(i.id)}>ارسال پیام</span>
+                                                            {
+                                                                i.status === 2 ? <Link to={`/check-meet/${i.id}`} className='badge bg-label-danger cursor-pointer'>مشاهده اطلاعات جلسه</Link> :
+                                                                    <>
+                                                                        <Link to={`/add-users-meet/${i.id}`} className="badge bg-label-secondary cursor-pointer">افزودن مخاطب</Link>
+                                                                        <Link to={`/check-meet/${i.id}`} className='badge bg-label-warning cursor-pointer'>برو به جلسه</Link>
+                                                                        <span className='badge bg-label-success cursor-pointer' onClick={() => handleSendSms(i.id)}>ارسال پیام</span>
+                                                                    </>
+                                                            }
                                                         </td>
                                                     </tr>
                                                     :

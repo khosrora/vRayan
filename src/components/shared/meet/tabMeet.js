@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import Swal from 'sweetalert2';
@@ -26,6 +27,7 @@ const TabMeet = () => {
     const [time, setTime] = useState();
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     return (
         <div className="col-12">
@@ -53,6 +55,7 @@ const TabMeet = () => {
                     values.startTime = `${time.toDate().getHours()}:${time.toDate().getMinutes()}`;
                     values.startDate = date.toDate().toLocaleDateString('en-US');
                     dispatch(createMeet(values));
+                    navigate("/all-meetings")
                 }}
             >{({ errors, touched }) => (
                 <Form>

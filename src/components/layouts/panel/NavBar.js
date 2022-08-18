@@ -7,6 +7,7 @@ const NavBar = ({ setMenu, menu }) => {
 
     const { auth } = useSelector(state => state);
     const id = auth.userId;
+    const user = auth.user;
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(refreshToken(id));
@@ -28,7 +29,11 @@ const NavBar = ({ setMenu, menu }) => {
                     <div className="navbar-nav align-items-center">
                         <div className="nav-item navbar-search-wrapper mb-0">
                             <a className="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
-                                <span className="d-none d-md-inline-block text-muted"> {auth?.user?.firstName} عزیز خوش آمدید</span>
+                                <span className="d-none d-md-inline-block text-muted">
+                                    {
+                                        auth?.user?.firstName ? `${auth?.user?.firstName} خوش آمدید` : "به ویدیو رایان خوش آمدید"
+                                    }
+                                </span>
                             </a>
                         </div>
                     </div>
@@ -203,7 +208,7 @@ const NavBar = ({ setMenu, menu }) => {
                         <li className="nav-item navbar-dropdown dropdown-user dropdown">
                             <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div className="avatar avatar-online">
-                                    <img src="./assets/img/avatars/1.png" alt className="rounded-circle" />
+                                    <img src={user.logo === "https://videorayan.ir/Pictures//" ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
                                 </div>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end">
@@ -212,7 +217,7 @@ const NavBar = ({ setMenu, menu }) => {
                                         <div className="d-flex align-items-center">
                                             <div className="flex me-3">
                                                 <div className="avatar avatar-online mt-1">
-                                                    <img src="./assets/img/avatars/1.png" alt className="rounded-circle" />
+                                                    <img src={user.logo === "https://videorayan.ir/Pictures//" ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
                                                 </div>
                                             </div>
                                             <div className="">

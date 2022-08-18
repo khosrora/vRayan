@@ -62,7 +62,7 @@ const AddUserList = ({ filter }) => {
                                 return i.creatorName.includes(filter) ?
                                     <tr>
                                         <td><input className="form-check-input" type="checkbox" value={i.id} onChange={handleAddUserToMeet} /></td>
-                                        <td><span>{i.creatorName}</span></td>
+                                        <td><span>{i.fullName}</span></td>
                                         <td><span className="badge bg-label-secondary">{i.mobile}</span></td>
                                         <td><span className="badge bg-label-secondary">{i.position}</span></td>
                                         <td><input className="form-check-input" type="radio" name='master' /></td>

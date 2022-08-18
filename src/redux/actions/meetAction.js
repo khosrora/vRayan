@@ -66,11 +66,11 @@ export const addUserToMeet = data => async dispatch => {
 export const addMasterToMeet = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI(`Meeting/audiences/${data.meetingId}`, data);
+        const res = await postDataAPI(`Invitation`, data);
         console.log(res);
-        // if (res.status === 200) {
-        //     successMessage(res.data[0]);
-        // }
+        if (res.status === 200) {
+            successMessage(res.data);
+        }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
