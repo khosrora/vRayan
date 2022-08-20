@@ -1,5 +1,5 @@
 import { errorMessage, successMessage } from '../../utils/toast';
-import { deleteDataAPI, getDataAPI, postDataAPI, putDataAPI, tokenUser } from './../../utils/fetchData';
+import {  getDataAPI, postDataAPI } from './../../utils/fetchData';
 import { GLOBALTYPES } from './globalTypes';
 
 
@@ -8,7 +8,7 @@ export const getContacts = (customerId, category) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await getDataAPI(`Audience?customerId=${customerId}&category=${category}`)
-        dispatch({ type: GLOBALTYPES.GET_CONTACTS, payload: { contacts: res.data } });
+        dispatch({ type: GLOBALTYPES.GET_CONTACTS, payload: { contacts: res.data.data } });
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
@@ -22,7 +22,6 @@ export const addContact = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI("Audience", data);
-        console.log(res);
         if (res.status === 200) {
             successMessage(res.data.message);
             dispatch({ type: GLOBALTYPES.ADD_CONTACTS, payload: { contacts: res.data.value } });

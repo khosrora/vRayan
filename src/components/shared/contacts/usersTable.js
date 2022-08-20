@@ -55,10 +55,10 @@ const UsersTable = ({ filter, setEditUser }) => {
                             </thead>
                             <tbody className="table-border-bottom-0">
                                 {
-                                    users.map(i => {
+                                    users.map((i, index) => {
                                         return i.fullName.includes(filter)
                                             ?
-                                            <tr>
+                                            <tr key={index}>
                                                 <td><strong>{i.fullName}</strong></td>
                                                 <td><span className="badge bg-label-secondary">{i.mobile}</span></td>
                                                 <td><span className="badge bg-label-secondary">{i.position}</span></td>
@@ -71,8 +71,7 @@ const UsersTable = ({ filter, setEditUser }) => {
                                                     </span>
                                                 </td>
                                             </tr>
-                                            :
-                                            null
+                                            : null
                                     }
                                     )
                                 }

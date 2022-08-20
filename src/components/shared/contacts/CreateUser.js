@@ -4,7 +4,6 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { addContact } from '../../../redux/actions/contactAction';
 import { getCategories } from '../../../redux/actions/categoriesAction';
-import Swal from 'sweetalert2';
 
 const createUserValidation = Yup.object().shape({
     fullName: Yup.string().min(2, "نام کاربری بیش از حد کوتاه است").max(50, "نام کاربری بیش از حد بزرگ است").required("وارد کردن این فیلد الزامی است"),

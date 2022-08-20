@@ -19,7 +19,7 @@ const AddType = ({ setTab }) => {
                                                 <img class="mb-4" src="./assets/img/icons/unicons/rocket-square.png" height="48" alt="Help center articles" />
                                                 <h5>حضوری</h5>
                                                 <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با</p>
-                                                <button disabled class="btn btn-label-secondary" >به زودی</button>
+                                                <button  class="btn btn-label-secondary" onClick={() => setTab("verbal")} >ایجاد جلسه حضوری</button>
                                             </div>
                                         </div>
                                     </div>
@@ -29,7 +29,7 @@ const AddType = ({ setTab }) => {
                                                 <img class="mb-4" src="./assets/img/icons/unicons/cube.png" height="48" alt="Help center articles" />
                                                 <h5>کنفرانس</h5>
                                                 <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت</p>
-                                                <button class="btn btn-label-secondary" onClick={() => setTab("options")} >تایید جلسه</button>
+                                                <button class="btn btn-label-secondary" onClick={() => setTab("options")} >ایجاد ویدیو کنفرانس</button>
                                             </div>
                                         </div>
                                     </div>

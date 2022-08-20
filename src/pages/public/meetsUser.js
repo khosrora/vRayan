@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteMeet, getMeets, sendSms } from '../../redux/actions/meetAction';
+import { deleteMeet, getAudiences, getMeets, sendSms } from '../../redux/actions/meetAction';
 import Swal from 'sweetalert2';
 import Loader from '../../components/shared/loader';
 import SearchMeets from '../../components/shared/meet/searchMeets';
@@ -11,6 +11,7 @@ import SearchMeets from '../../components/shared/meet/searchMeets';
 const MeetsUser = () => {
 
     const [filter, setFilter] = useState("");
+    const [type, setType] = useState("meeting");
     const { auth, meets, global } = useSelector(state => state);
     const userId = auth.userId;
     const sessions = meets.allMeets;
@@ -28,8 +29,12 @@ const MeetsUser = () => {
     }
 
     useEffect(() => {
-        dispatch(getMeets(userId))
-    }, []);
+        if (type === "meeting") {
+            dispatch(getMeets(userId))
+        } else {
+            dispatch(getAudiences(userId))
+        }
+    }, [type]);
 
     const handleSendSms = (id) => {
         Swal.fire({
@@ -60,7 +65,7 @@ const MeetsUser = () => {
             cancelButtonText: 'منصرف شدم'
         }).then(async (result) => {
             if (result.isConfirmed) {
-                dispatch(deleteMeet(userId, id));
+                dispatch(deleteMeet(userId, id, type));
             }
         });
     }
@@ -70,7 +75,9 @@ const MeetsUser = () => {
     return (
         <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
-                <SearchMeets setFilter={setFilter} />
+                <div className="">
+                    <SearchMeets setFilter={setFilter} setType={setType} />
+                </div>
                 <div className="card">
                     <div className="table-responsive text-nowrap">
                         {

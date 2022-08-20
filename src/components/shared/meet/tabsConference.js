@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import AddType from './addType';
 import TabMeet from './tabMeet';
+import TabVerbal from './tabVerbal';
 
 
 
@@ -12,6 +13,8 @@ const TabConference = () => {
         switch (type) {
             case "options":
                 return <TabMeet />;
+            case "verbal":
+                return <TabVerbal />;
             case "type":
                 return <AddType setTab={setTab} />
             default:
@@ -27,7 +30,7 @@ const TabConference = () => {
                         <button className={`${tab === "type" ? "btn btn-secondary" : "nav-link"}`}><i className="bx bx-user me-1"></i> انتخاب نوع</button>
                     </li>
                     <li className="nav-item">
-                        <button className={`${tab === "options" ? "btn btn-secondary" : "nav-link"}`}><i className="bx bx-detail me-1"></i>امکانات جلسه</button>
+                        <button className={`${tab !== "type" ? "btn btn-secondary" : "nav-link"}`}><i className="bx bx-detail me-1"></i>امکانات جلسه</button>
                     </li>
                 </ul>
                 <div className="card mb-4">

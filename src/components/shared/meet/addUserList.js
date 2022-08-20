@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../../redux/actions/contactAction';
-import { useParams } from "react-router-dom";
+import { useParams , useNavigate } from "react-router-dom";
 import { addMasterToMeet } from '../../../redux/actions/meetAction';
 
 
 const AddUserList = ({ filter }) => {
 
     const [audiencesId, setAudiencesId] = useState([]);
+    const [master, setMaster] = useState();
     const { auth, contacts } = useSelector(state => state);
     const customerId = auth.userId;
     const users = contacts.allContacts;
     let { id: meetingId } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(getContacts(customerId, ""));
@@ -29,14 +31,20 @@ const AddUserList = ({ filter }) => {
         }
     }
 
+    const handleMaster = (e) => {
+        console.log(e.target.getAttribute("data-value"));
+        setMaster(e.target.getAttribute("data-value"))
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         let data = {
             meetingId,
-            audiencesId
+            audiencesId,
+            hostId : master
         }
         dispatch(addMasterToMeet(data));
-        console.log(data);
+        navigate("/all-meetings")
     }
 
     return (
@@ -65,7 +73,7 @@ const AddUserList = ({ filter }) => {
                                         <td><span>{i.fullName}</span></td>
                                         <td><span className="badge bg-label-secondary">{i.mobile}</span></td>
                                         <td><span className="badge bg-label-secondary">{i.position}</span></td>
-                                        <td><input className="form-check-input" type="radio" name='master' /></td>
+                                        <td><input className="form-check-input" type="radio" name='master' data-value={i.id} onChange={handleMaster} /></td>
                                     </tr>
                                     :
                                     null

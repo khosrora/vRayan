@@ -25,13 +25,13 @@ const Dashboard = () => {
                     </div>
                     <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4 position-relative">
                         <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto cursor-pointer">
-                            <img src={user.logo === "https://videorayan.ir/Pictures//" ? './assets/img/avatars/1.png' : user.logo} alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
+                            <img src={user.logo === null ? './assets/img/avatars/1.png' : user.logo} alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
                             {
                                 global.load ?
                                     <label for="upload" className="btn btn-secondary me-2 mb-4 m-2" tabindex="0">
                                         <span class="d-none d-sm-block">لطفا منتظر بمانید</span>
                                         <i class="bx bx-upload d-block d-sm-none"></i>
-                                        <input  className="account-file-input" hidden accept="image/png, image/jpeg" />
+                                        <input className="account-file-input" hidden accept="image/png, image/jpeg" />
                                     </label>
                                     :
                                     <label for="upload" className="btn btn-secondary me-2 mb-4 m-2" tabindex="0">

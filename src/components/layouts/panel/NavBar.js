@@ -208,7 +208,7 @@ const NavBar = ({ setMenu, menu }) => {
                         <li className="nav-item navbar-dropdown dropdown-user dropdown">
                             <a className="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
                                 <div className="avatar avatar-online">
-                                    <img src={user.logo === "https://videorayan.ir/Pictures//" ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
+                                    <img src={user.logo === null ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
                                 </div>
                             </a>
                             <ul className="dropdown-menu dropdown-menu-end">
@@ -217,7 +217,7 @@ const NavBar = ({ setMenu, menu }) => {
                                         <div className="d-flex align-items-center">
                                             <div className="flex me-3">
                                                 <div className="avatar avatar-online mt-1">
-                                                    <img src={user.logo === "https://videorayan.ir/Pictures//" ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
+                                                    <img src={user.logo === null ? './assets/img/avatars/1.png' : user.logo} alt className="rounded-circle" />
                                                 </div>
                                             </div>
                                             <div className="">
