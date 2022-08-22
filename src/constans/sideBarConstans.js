@@ -5,6 +5,11 @@ export const sideBarConstans = [
         title: "پروفایل کاربری",
     },
     {
+        icon: "menu-icon tf-icons bx bx-basket",
+        route: "/tariffs",
+        title: "تعرفه ها",
+    },
+    {
         icon: "menu-icon tf-icons bx bx-collection",
         route: "/create-categories",
         title: "دسته بندی",

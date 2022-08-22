@@ -25,6 +25,7 @@ import CreateMeeting from "./public/createMeet";
 import MeetsUser from "./public/meetsUser";
 import Meet from "./public/meet";
 import AddUsersMeet from "./public/addUsersMeet";
+import Tariff from "./public/tariff";
 
 
 const Index = () => {
@@ -55,6 +56,7 @@ const Index = () => {
                         <>
                             <Route element={<Layout />} >
                                 <Route path='/dashboard' element={<Dashboard />} />
+                                <Route path='/tariffs' element={<Tariff />} />
                                 <Route path='/create-categories' element={<Categories />} />
                                 <Route path='/create-contacts' element={<Contacts />} />
                                 <Route path='/create-meeting' element={<CreateMeeting />} />

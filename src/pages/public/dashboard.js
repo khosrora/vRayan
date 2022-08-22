@@ -77,8 +77,26 @@ const Dashboard = () => {
                 {
                     edit ? <UserDetails setEdit={setEdit} /> : null
                 }
+                <div class="bg-secondary text-white help-center-contact-us help-center-bg-alt rounded shadow">
+                    <div class="container-xl">
+                        <div class="row justify-content-center py-5 my-3">
+                            <div class="col-md-8 col-lg-6 text-center">
+                                <h4 class="text-white">مشاهده تعرفه ها</h4>
+                                <p class="mb-4">
+                                    متخصصین ما همواره آماده راهنمایی هستند. با ما در طول ساعات <br />
+                                    کاری تماس بگیرید و یا در هر زمان ایمیل ارسال کنید و ما با شما تماس می گیریم.
+                                </p>
+                                <div class="d-flex justify-content-center flex-wrap gap-4">
+                                    <Link to="/tariffs">
+                                        <p class="btn btn-label-danger">تعرفه ها</p>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div >
+        </div>
     );
 }
 
