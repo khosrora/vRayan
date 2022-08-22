@@ -10,8 +10,8 @@ export const createMeet = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI('Meeting', data, token);
+        console.log(res);
         if (res.status === 200) {
-            dispatch({ type: GLOBALTYPES.ADD_MEET, payload: { meets: res.data.data } })
             successMessage(res.data);
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
