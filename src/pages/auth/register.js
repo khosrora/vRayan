@@ -95,9 +95,7 @@ const Register = () => {
                     </Form>
                 )}
             </Formik>
-            <Link to="/login">
-                <span>برای ورود اینجا کلیک کنید</span>
-            </Link>
+      
         </div>
     );
 }

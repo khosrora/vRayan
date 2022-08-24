@@ -38,6 +38,18 @@ export const getOtp = data => async dispatch => {
     }
 }
 
+export const handleFalseOtp = () => async dispatch => {
+    try {
+        console.log("object");
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        dispatch({ type: GLOBALTYPES.USER, payload: { getOtp: false } })
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.USER, payload: { getOtp: false } })
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    }
+}
+
 export const refreshToken = (id, token) => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
