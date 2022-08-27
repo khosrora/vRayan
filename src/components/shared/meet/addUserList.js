@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getContacts } from '../../../redux/actions/contactAction';
-import { useParams , useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { addMasterToMeet } from '../../../redux/actions/meetAction';
+import Swal from 'sweetalert2';
 
 
 const AddUserList = ({ filter }) => {
@@ -32,16 +33,23 @@ const AddUserList = ({ filter }) => {
     }
 
     const handleMaster = (e) => {
-        console.log(e.target.getAttribute("data-value"));
         setMaster(e.target.getAttribute("data-value"))
     }
 
     const handleSubmit = e => {
         e.preventDefault();
+        if (!master) {
+            return Swal.fire({
+                text: "لطفا استاد جلسه را مشخص کنید",
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'باشه',
+            })
+        }
         let data = {
             meetingId,
             audiencesId,
-            hostId : master
+            hostId: master
         }
         dispatch(addMasterToMeet(data));
         navigate("/all-meetings")

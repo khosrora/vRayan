@@ -17,6 +17,8 @@ import { createMeetVerbal } from '../../../redux/actions/meetAction';
 
 const addMeetValidation = Yup.object().shape({
     title: Yup.string().required("وارد کردن نام جلسه الزامی است"),
+    address: Yup.string().required("وارد کردن آدرس الزامی است"),
+    description: Yup.string().required("وارد کردن توضیحات الزامی است"),
 });
 
 const TabVerbal = () => {
@@ -35,7 +37,9 @@ const TabVerbal = () => {
                 initialValues={{
                     userId,
                     title: "",
-                    type: 1,
+                    address: "",
+                    description: "",
+                    type: 0,
                 }}
                 validationSchema={addMeetValidation}
                 onSubmit={values => {
@@ -50,7 +54,7 @@ const TabVerbal = () => {
                     values.startTime = `${time.toDate().getHours()}:${time.toDate().getMinutes()}`;
                     values.startDate = date.toDate().toLocaleDateString('en-US');
                     dispatch(createMeetVerbal(values));
-                    navigate("/all-meetings")
+                    // navigate("/all-meetings")
                 }}
             >{({ errors, touched }) => (
                 <Form>
@@ -111,6 +115,17 @@ const TabVerbal = () => {
                                         calendarPosition="bottom-right"
                                         placeholder="مثال :‌18:‌00"
                                     />
+                                </div>
+                                <div class="col-xl-12 mb-4">
+                                    <label class="form-label" for="">آدرس</label>
+                                    <Field type="text" id="" name="address" class="form-control credit-card-mask text-start" dir="ltr" placeholder="آدرس را وارد کنید" aria-describedby="creditCardMask2" />
+                                    {errors.address && touched.address ? <span className='text-danger'>{errors.address}</span> : null}
+                                </div>
+                                <div className="col-12">
+                                    <label class="form-label" for="">توضیحات</label>
+                                    <br />
+                                    <Field  id="basic-default-message"  name='description'  className="form-control" placeholder="توضیحات را اینجا بنویسید"></Field>
+                                    {errors.description && touched.description ? <span className='text-danger'>{errors.description}</span> : null}
                                 </div>
                             </div>
                         </div>

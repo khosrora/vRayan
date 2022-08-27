@@ -73,7 +73,7 @@ const MeetsUser = () => {
 
 
     return (
-        
+
         <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="">
@@ -114,7 +114,11 @@ const MeetsUser = () => {
                                                                 i.status === 2 ? <Link to={`/check-meet/${i.id}`} className='badge bg-label-danger cursor-pointer'>مشاهده اطلاعات جلسه</Link> :
                                                                     <>
                                                                         <Link to={`/add-users-meet/${i.id}`} className="badge bg-label-secondary cursor-pointer">افزودن مخاطب</Link>
-                                                                        <Link to={`/check-meet/${i.id}`} className='badge bg-label-warning cursor-pointer'>برو به جلسه</Link>
+                                                                        {
+                                                                            type === "meeting" ?
+                                                                                <Link to={`/check-meet/${i.id}`} className='badge bg-label-warning cursor-pointer'>برو به جلسه</Link>
+                                                                                : null
+                                                                        }
                                                                         <span className='badge bg-label-success cursor-pointer' onClick={() => handleSendSms(i.id)}>ارسال پیام</span>
                                                                     </>
                                                             }

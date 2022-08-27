@@ -26,6 +26,8 @@ import MeetsUser from "./public/meetsUser";
 import Meet from "./public/meet";
 import AddUsersMeet from "./public/addUsersMeet";
 import Tariff from "./public/tariff";
+import Waiting from "./Waiting";
+import LayoutWaiting from "../components/layouts/layoutWaiting/layoutWaiting";
 
 
 const Index = () => {
@@ -46,6 +48,9 @@ const Index = () => {
     return (
         <Router>
             <Routes>
+                <Route element={<LayoutMeet />}>
+                    <Route path='/waiting/:id' element={<Waiting />} />
+                </Route>
                 {
                     auth.accessToken === null ?
                         <Route
@@ -76,6 +81,7 @@ const Index = () => {
                         :
                         <Route path='*' element={<Navigate to="/dashboard" replace />} />
                 }
+
             </Routes>
         </Router >
     );
