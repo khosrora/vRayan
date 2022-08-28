@@ -1,8 +1,44 @@
-
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router';
+import { check_Code, getMeet } from '../redux/actions/meetAction';
+import { errorMessage } from '../utils/toast';
 
 
 
 const Waiting = () => {
+
+    const search = useLocation().search;
+    const id = new URLSearchParams(search).get("id");
+    const [data, setData] = useState();
+    const [send, setSend] = useState(false);
+    const [load, setLoad] = useState(true);
+    const [getCode, setGetCode] = useState({ id });
+    const [code, setCode] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const res = await getMeet(id);
+            setData(res)
+        }
+        fetchData();
+        setLoad(false);
+    }, []);
+
+    const handleCheckCode = async (id) => {
+        try {
+            if(!id || !code) return;
+            setGetCode({
+                id,
+                pincode: code
+            })
+            const res = await check_Code(getCode);
+            console.log(res);
+        } catch (error) {
+            errorMessage("لطفا دوباره امتحان کنید")
+        }
+    }
+
+    if (!data) return <p>در حال دریافت اطلاعات</p>
     return (
         <>
             <div className="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center">
@@ -19,10 +55,13 @@ const Waiting = () => {
             <div className="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
                 <div className="col-12 mx-auto">
                     <div className="card-header">
-                 
+                        <h1>{data.title}</h1>
+                        <p>
+                            {data.description}
+                        </p>
                     </div>
                     <div className="card-body">
-                        <span className="d-inline-block lh-1-85 mb-2">جزئیات جلسه</span>
+                        <span className="d-inline-block lh-1-85 mb-2">کد دعوت جلسه</span>
                         <div className="progress progress-stacked mb-4" style={{ height: "8px" }}>
                             <div className="progress-bar bg-success" role="progressbar" style={{ width: "30%" }} aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
                             <div className="progress-bar bg-danger" role="progressbar" style={{ width: "15%" }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
@@ -30,9 +69,18 @@ const Waiting = () => {
                             <div className="progress-bar bg-primary" role="progressbar" style={{ width: "40%" }} aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                             <div className="progress-bar bg-warning" role="progressbar" style={{ width: "15%" }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
-                        <button className="btn btn-secondary text-nowrap mt-4 w-100" disabled>
-                            جلسه هنوز شروع نشده است
-                        </button>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="multicol-confirm-password" class="form-control text-start" onChange={(e) => setCode(e.target.value)} dir="ltr" placeholder="············" aria-describedby="multicol-confirm-password2" />
+                        </div>
+                        {
+                            send ?
+                                <button className="btn btn-secondary text-nowrap mt-4 w-100">
+                                    ورود به جلسه
+                                </button> :
+                                <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={() => handleCheckCode(id)}>
+                                    ارسال کد
+                                </button>
+                        }
                     </div>
                 </div>
             </div>

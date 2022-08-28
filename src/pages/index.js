@@ -46,44 +46,48 @@ const Index = () => {
     if (load) return <p>لطفا منتظر بمانید</p>
 
     return (
-        <Router>
-            <Routes>
-                <Route element={<LayoutMeet />}>
-                    <Route path='/waiting/:id' element={<Waiting />} />
-                </Route>
-                {
-                    auth.accessToken === null ?
-                        <Route
-                            path="*"
-                            element={<Navigate to="/" replace />}
-                        />
-                        :
-                        <>
-                            <Route element={<Layout />} >
-                                <Route path='/dashboard' element={<Dashboard />} />
-                                <Route path='/tariffs' element={<Tariff />} />
-                                <Route path='/create-categories' element={<Categories />} />
-                                <Route path='/create-contacts' element={<Contacts />} />
-                                <Route path='/create-meeting' element={<CreateMeeting />} />
-                                <Route path='/all-meetings' element={<MeetsUser />} />
-                                <Route path='/add-users-meet/:id' element={<AddUsersMeet />} />
+        <>
+            <Router>
+                <Routes>
+                    <Route element={<LayoutMeet />}>
+                        <Route path='/waiting/:id' element={<Waiting />} />
+                    </Route>
+                    {
+                        auth.accessToken === null ?
+                            <Route
+                                path="*"
+                                element={<Navigate to="/" replace />}
+                            />
+                            :
+                            <>
+                                <Route element={<Layout />} >
+                                    <Route path='/dashboard' element={<Dashboard />} />
+                                    <Route path='/tariffs' element={<Tariff />} />
+                                    <Route path='/create-categories' element={<Categories />} />
+                                    <Route path='/create-contacts' element={<Contacts />} />
+                                    <Route path='/create-meeting' element={<CreateMeeting />} />
+                                    <Route path='/all-meetings' element={<MeetsUser />} />
+                                    <Route path='/add-users-meet/:id' element={<AddUsersMeet />} />
+                                </Route>
+                                <Route element={<LayoutMeet />}>
+                                    <Route path='/check-meet/:id' element={<Meet />} />
+                                </Route>
+                            </>
+                    }
+                    {
+                        auth.accessToken === null ?
+                            <Route element={<LayoutAuth />} >
+                                <Route path='/' element={<Login />} />
                             </Route>
-                            <Route element={<LayoutMeet />}>
-                                <Route path='/check-meet/:id' element={<Meet />} />
-                            </Route>
-                        </>
-                }
-                {
-                    auth.accessToken === null ?
-                        <Route element={<LayoutAuth />} >
-                            <Route path='/' element={<Login />} />
-                        </Route>
-                        :
-                        <Route path='*' element={<Navigate to="/dashboard" replace />} />
-                }
-
-            </Routes>
-        </Router >
+                            :
+                            <Route path='*' element={<Navigate to="/dashboard" replace />} />
+                    }
+                    <Route element={<LayoutMeet />}>
+                        <Route path='/waiting' element={<Waiting />} />
+                    </Route>
+                </Routes>
+            </Router >
+        </>
     );
 }
 

@@ -112,10 +112,12 @@ export const addMasterToMeet = data => async dispatch => {
 export const sendSms = id => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
-        const res = await postDataAPI('auth/sessions/sendmessage', { s_id: id }, token);
-        if (res.status === 200) {
-            successMessage(res.data[0]);
-        }
+        console.log(id);
+        const res = await postDataAPI(`meeting/sendsms/${id}/true`);
+        console.log(res);
+        // if (res.status === 200) {
+        //     successMessage(res.data[0]);
+        // }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
@@ -129,5 +131,13 @@ export const getMeet = async (id) => {
         return res.data;
     } catch (error) {
         errorMessage("لطفا دوباره تلاش کنید");
+    }
+}
+export const check_Code = async (data) => {
+    try {
+        const res = await postDataAPI(`meeting/gotomeeting`, data);
+        return res.data;
+    } catch (error) {
+        errorMessage("لطفا در وارد کردن کد دقت کنید");
     }
 }
