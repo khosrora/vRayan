@@ -21,21 +21,26 @@ const Waiting = () => {
             setData(res)
         }
         fetchData();
-        setLoad(false);
     }, []);
 
     const handleCheckCode = async (id) => {
         try {
-            if(!id || !code) return;
+            if (!id || !code) return;
             setGetCode({
                 id,
                 pincode: code
             })
             const res = await check_Code(getCode);
             console.log(res);
+            if (res === "OK") setSend(true)
+            setLoad(false);
         } catch (error) {
             errorMessage("لطفا دوباره امتحان کنید")
         }
+    }
+
+    const redirectToMeet = () => {
+        console.log("redirected");
     }
 
     if (!data) return <p>در حال دریافت اطلاعات</p>
@@ -74,7 +79,7 @@ const Waiting = () => {
                         </div>
                         {
                             send ?
-                                <button className="btn btn-secondary text-nowrap mt-4 w-100">
+                                <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={() => redirectToMeet()}>
                                     ورود به جلسه
                                 </button> :
                                 <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={() => handleCheckCode(id)}>

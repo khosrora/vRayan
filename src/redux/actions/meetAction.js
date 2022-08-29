@@ -113,11 +113,11 @@ export const sendSms = id => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         console.log(id);
-        const res = await postDataAPI(`meeting/sendsms/${id}/true`);
+        const res = await postDataAPI(`meeting/sendsms/${id}/1`);
         console.log(res);
-        // if (res.status === 200) {
-        //     successMessage(res.data[0]);
-        // }
+        if (res.status === 200) {
+            successMessage(res.data);
+        }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
@@ -136,8 +136,10 @@ export const getMeet = async (id) => {
 export const check_Code = async (data) => {
     try {
         const res = await postDataAPI(`meeting/gotomeeting`, data);
-        return res.data;
+        if (res.status === 200) {
+            return "OK";
+        }
     } catch (error) {
-        errorMessage("لطفا در وارد کردن کد دقت کنید");
+        errorMessage(error.response.data);
     }
 }
