@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { check_Code, getMeet } from '../redux/actions/meetAction';
 import { errorMessage } from '../utils/toast';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const Waiting = () => {
@@ -14,6 +14,7 @@ const Waiting = () => {
     const [load, setLoad] = useState(true);
     const [getCode, setGetCode] = useState({ id });
     const [code, setCode] = useState();
+    const navigate = useNavigate()
 
     useEffect(() => {
         const fetchData = async () => {
@@ -30,6 +31,7 @@ const Waiting = () => {
                 id,
                 pincode: code
             })
+            console.log(getCode);
             const res = await check_Code(getCode);
             console.log(res);
             if (res === "OK") setSend(true)
@@ -39,8 +41,10 @@ const Waiting = () => {
         }
     }
 
-    const redirectToMeet = () => {
-        console.log("redirected");
+    const redirectToMeet = (e) => {
+        e.preventDefault();
+        console.log("object");
+        navigate(`/videoRayan?id=${id}`)
     }
 
     if (!data) return <p>در حال دریافت اطلاعات</p>
@@ -79,7 +83,7 @@ const Waiting = () => {
                         </div>
                         {
                             send ?
-                                <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={() => redirectToMeet()}>
+                                <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={(e) => redirectToMeet(e)}>
                                     ورود به جلسه
                                 </button> :
                                 <button className="btn btn-secondary text-nowrap mt-4 w-100" onClick={() => handleCheckCode(id)}>

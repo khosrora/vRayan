@@ -27,7 +27,9 @@ import Meet from "./public/meet";
 import AddUsersMeet from "./public/addUsersMeet";
 import Tariff from "./public/tariff";
 import Waiting from "./Waiting";
-import LayoutWaiting from "../components/layouts/layoutWaiting/layoutWaiting";
+import EditMeet from "./public/editMeet";
+import LayoutVideo from "../components/layouts/LayoutVideo/LayoutVideo";
+import VideoConfronceMeet from "../components/shared/meet";
 
 
 const Index = () => {
@@ -68,6 +70,7 @@ const Index = () => {
                                     <Route path='/create-meeting' element={<CreateMeeting />} />
                                     <Route path='/all-meetings' element={<MeetsUser />} />
                                     <Route path='/add-users-meet/:id' element={<AddUsersMeet />} />
+                                    <Route path='/editeMeetConfronce/:id' element={<EditMeet />} />
                                 </Route>
                                 <Route element={<LayoutMeet />}>
                                     <Route path='/check-meet/:id' element={<Meet />} />
@@ -84,6 +87,9 @@ const Index = () => {
                     }
                     <Route element={<LayoutMeet />}>
                         <Route path='/waiting' element={<Waiting />} />
+                    </Route>
+                    <Route element={<LayoutVideo />}>
+                        <Route path='/videoRayan' element={<VideoConfronceMeet />} />
                     </Route>
                 </Routes>
             </Router >

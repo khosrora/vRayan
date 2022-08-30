@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { deleteMeet, getAudiences, getMeets, sendSms } from '../../redux/actions/meetAction';
+import { deleteMeet, getAudiences, getMeets, sendSms, sendSmsCancell } from '../../redux/actions/meetAction';
 import Swal from 'sweetalert2';
 import Loader from '../../components/shared/loader';
 import SearchMeets from '../../components/shared/meet/searchMeets';
@@ -49,6 +49,23 @@ const MeetsUser = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 dispatch(sendSms(id));
+            }
+        });
+    }
+
+    const handleSendSmsCancell = (id) => {
+        Swal.fire({
+            title: 'آیا مطمئن هستید ؟',
+            text: "پیامکی حاوی لغو جلسه برای مدعوین ارسال خواهد شد",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'بله ارسال کن',
+            cancelButtonText: 'منصرف شدم'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                dispatch(sendSmsCancell(id));
             }
         });
     }
@@ -110,6 +127,9 @@ const MeetsUser = () => {
                                                         </td>
                                                         <td>
                                                             <i onClick={() => handleDelete(userId, i.id)} className="align-middle fmenu-icon tf-icons bx bx-trash text-danger me-3 cursor-pointer"></i>
+                                                            <Link to={`/editeMeetConfronce/${i.id}`}>
+                                                                <i className="align-middle fmenu-icon tf-icons bx bx-edit  text-primary me-3 cursor-pointer"></i>
+                                                            </Link>
                                                             {
                                                                 i.status === 2 ? <Link to={`/check-meet/${i.id}`} className='badge bg-label-danger cursor-pointer'>مشاهده اطلاعات جلسه</Link> :
                                                                     <>
@@ -120,6 +140,7 @@ const MeetsUser = () => {
                                                                                 : null
                                                                         }
                                                                         <span className='badge bg-label-success cursor-pointer' onClick={() => handleSendSms(i.id)}>ارسال پیام</span>
+                                                                        <span className='badge bg-label-danger cursor-pointer' onClick={() => handleSendSmsCancell(i.id)}> ارسال پیام لغو</span>
                                                                     </>
                                                             }
                                                         </td>

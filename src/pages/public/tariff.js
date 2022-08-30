@@ -17,7 +17,6 @@ const Tariff = () => {
             console.log(error);
         }
     }
-    console.log(data);
     useEffect(() => getData, []);
 
     if (load) return <p>در حال دریافت اطلاعات</p>

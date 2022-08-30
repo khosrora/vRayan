@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom";
 
 
 
-const LayoutWaiting = () => {
+const LayoutVideo = () => {
     return (
         <div class="authentication-wrapper authentication-cover">
             <div class="authentication-inner row m-0">
@@ -12,4 +12,4 @@ const LayoutWaiting = () => {
     );
 }
 
-export default LayoutWaiting;
+export default LayoutVideo;

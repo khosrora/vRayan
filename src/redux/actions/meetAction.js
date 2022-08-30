@@ -11,7 +11,7 @@ export const createMeet = data => async dispatch => {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI('Meeting', data, token);
         if (res.status === 200) {
-            successMessage(res.data);
+            successMessage(res.data.message);
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
@@ -19,12 +19,28 @@ export const createMeet = data => async dispatch => {
         errorMessage("لطفا دوباره تلاش کنید");
     }
 }
+
+export const editMeet = data => async dispatch => {
+    try {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        const res = await postDataAPI('Meeting/edit', data, token);
+        console.log(res);
+        if (res.status === 200) {
+            successMessage(res.data.message);
+        }
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+        errorMessage("لطفا دوباره تلاش کنید");
+    }
+}
+
 export const createMeetVerbal = data => async dispatch => {
     try {
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
         const res = await postDataAPI('FaceToFace', data, token);
         if (res.status === 200) {
-            successMessage(res.data);
+            successMessage(res.data.message);
         }
         dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
     } catch (err) {
@@ -125,6 +141,22 @@ export const sendSms = id => async dispatch => {
     }
 }
 
+export const sendSmsCancell = id => async dispatch => {
+    try {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        console.log(id);
+        const res = await postDataAPI(`meeting/sendsms/${id}/0`);
+        console.log(res);
+        if (res.status === 200) {
+            successMessage(res.data);
+        }
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+        errorMessage("لطفا دوباره تلاش کنید");
+    }
+}
+
 export const getMeet = async (id) => {
     try {
         const res = await getDataAPI(`Meeting/${id}`, token);
@@ -133,6 +165,7 @@ export const getMeet = async (id) => {
         errorMessage("لطفا دوباره تلاش کنید");
     }
 }
+
 export const check_Code = async (data) => {
     try {
         const res = await postDataAPI(`meeting/gotomeeting`, data);
