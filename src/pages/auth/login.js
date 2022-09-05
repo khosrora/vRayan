@@ -8,7 +8,7 @@ const getOtpSchema = Yup.object().shape({
     phone: Yup.string().matches("^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}", "شماره همراه وارد شده نامعتبر است").required("وارد کردن شماره همراه ضروری است"),
 });
 const getCheckOtpSchema = Yup.object().shape({
-    phone: Yup.string().matches("^09(1[0-9]|3[1-9]|2[1-9])-?[0-9]{3}-?[0-9]{4}", "شماره همراه وارد شده نامعتبر است").required("وارد کردن شماره همراه ضروری است"),
+    phone: Yup.string().matches("^09[0-9]{9}$", "شماره همراه وارد شده نامعتبر است").required("وارد کردن شماره همراه ضروری است"),
     token: Yup.string().required("وارد کردن کد ارسال شده ضروری است")
 });
 
