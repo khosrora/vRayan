@@ -15,6 +15,7 @@ export const GLOBALTYPES = {
     ADD_MEET: "ADD_MEET",
     GET_MEETS: "GET_MEETS",
     DELETE_MEET: "DELETE_MEET",
+    LIST_MEETS: "LIST_MEETS"
 }
 
 

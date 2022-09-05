@@ -30,6 +30,7 @@ import Waiting from "./Waiting";
 import EditMeet from "./public/editMeet";
 import LayoutVideo from "../components/layouts/LayoutVideo/LayoutVideo";
 import VideoConfronceMeet from "../components/shared/meet";
+import ListMeets from "./public/listMeets";
 
 
 const Index = () => {
@@ -69,6 +70,7 @@ const Index = () => {
                                     <Route path='/create-contacts' element={<Contacts />} />
                                     <Route path='/create-meeting' element={<CreateMeeting />} />
                                     <Route path='/all-meetings' element={<MeetsUser />} />
+                                    <Route path='/list-meetings' element={<ListMeets />} />
                                     <Route path='/add-users-meet/:id' element={<AddUsersMeet />} />
                                     <Route path='/editeMeetConfronce/:id' element={<EditMeet />} />
                                 </Route>

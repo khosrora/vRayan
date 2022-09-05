@@ -28,5 +28,10 @@ export const sideBarConstans = [
         icon: "menu-icon tf-icons bx bx-spreadsheet",
         route: "/all-meetings",
         title: "لیست جلسات",
+    },
+    {
+        icon: "menu-icon tf-icons bx bx-spreadsheet",
+        route: "/list-meetings",
+        title: "جلسات دعوت شده",
     }
 ]

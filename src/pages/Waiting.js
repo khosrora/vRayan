@@ -23,18 +23,15 @@ const Waiting = () => {
         }
         fetchData();
     }, []);
-
     const handleCheckCode = async (id) => {
         try {
-            if (!id || !code) return;
-            setGetCode({
-                id,
-                pincode: code
-            })
-            console.log(getCode);
-            const res = await check_Code(getCode);
-            console.log(res);
-            if (res === "OK") setSend(true)
+            if (!id || !code) return errorMessage("کد پیامک شده را وارد کنید") ;
+            const res = await check_Code({ id, pinCode : code  });
+            if (res === "OK") { return setSend(true) }
+            else {
+                setCode('');
+                setGetCode({});
+            };
             setLoad(false);
         } catch (error) {
             errorMessage("لطفا دوباره امتحان کنید")
@@ -43,7 +40,6 @@ const Waiting = () => {
 
     const redirectToMeet = (e) => {
         e.preventDefault();
-        console.log("object");
         navigate(`/videoRayan?id=${id}`)
     }
 
@@ -79,7 +75,7 @@ const Waiting = () => {
                             <div className="progress-bar bg-warning" role="progressbar" style={{ width: "15%" }} aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                         <div class="input-group input-group-merge">
-                            <input type="password" id="multicol-confirm-password" class="form-control text-start" onChange={(e) => setCode(e.target.value)} dir="ltr" placeholder="············" aria-describedby="multicol-confirm-password2" />
+                            <input type="password" value={code} id="multicol-confirm-password" class="form-control text-start" onChange={(e) => setCode(e.target.value)} dir="ltr" placeholder="············" aria-describedby="multicol-confirm-password2" />
                         </div>
                         {
                             send ?

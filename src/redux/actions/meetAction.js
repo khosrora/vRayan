@@ -168,11 +168,27 @@ export const getMeet = async (id) => {
 
 export const check_Code = async (data) => {
     try {
+        console.log(data);
         const res = await postDataAPI(`meeting/gotomeeting`, data);
         if (res.status === 200) {
             return "OK";
         }
     } catch (error) {
         errorMessage(error.response.data);
+    }
+}
+
+export const getListMeetsUser = (customerId) => async dispatch => {
+    try {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        const res = await getDataAPI(`Customer/invitedMeetings?customerId=${customerId}`);
+        console.log(res);
+        dispatch({ type: GLOBALTYPES.LIST_MEETS, payload: { listmeets: res.data.data } })
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    } catch (err) {
+        console.log(err);
+        dispatch({ type: GLOBALTYPES.GET_MEETS, payload: { meets: [] } })
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+        errorMessage("لطفا دوباره تلاش کنید");
     }
 }

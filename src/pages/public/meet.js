@@ -104,9 +104,11 @@ const Meet = () => {
                                     </ul>
                                     {
                                         meet.status === 1 ?
-                                            <p className="btn btn-secondary text-nowrap mt-4 w-100">
-                                                برو به جلسه
-                                            </p>
+                                            <Link to={`/waiting?id=${meet.id}`} target="_blank">
+                                                <p className="btn btn-secondary text-nowrap mt-4 w-100">
+                                                    برو به جلسه
+                                                </p>
+                                            </Link>
                                             :
                                             <button className="btn btn-secondary text-nowrap mt-4 w-100" disabled>
                                                 جلسه هنوز شروع نشده است
