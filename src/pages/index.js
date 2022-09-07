@@ -31,6 +31,7 @@ import EditMeet from "./public/editMeet";
 import LayoutVideo from "../components/layouts/LayoutVideo/LayoutVideo";
 import VideoConfronceMeet from "../components/shared/meet";
 import ListMeets from "./public/listMeets";
+import EditMeetFaceToFace from "./public/editMeetFaceToFace";
 
 
 const Index = () => {
@@ -73,6 +74,7 @@ const Index = () => {
                                     <Route path='/list-meetings' element={<ListMeets />} />
                                     <Route path='/add-users-meet/:id' element={<AddUsersMeet />} />
                                     <Route path='/editeMeetConfronce/:id' element={<EditMeet />} />
+                                    <Route path='/editeMeetFaceToFace/:id' element={<EditMeetFaceToFace />} />
                                 </Route>
                                 <Route element={<LayoutMeet />}>
                                     <Route path='/check-meet/:id' element={<Meet />} />

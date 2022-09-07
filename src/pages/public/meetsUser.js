@@ -87,10 +87,7 @@ const MeetsUser = () => {
         });
     }
 
-
-
     return (
-
         <div className="content-wrapper">
             <div className="container-xxl flex-grow-1 container-p-y">
                 <div className="">
@@ -127,9 +124,16 @@ const MeetsUser = () => {
                                                         </td>
                                                         <td>
                                                             <i onClick={() => handleDelete(userId, i.id)} className="align-middle fmenu-icon tf-icons bx bx-trash text-danger me-3 cursor-pointer"></i>
-                                                            <Link to={`/editeMeetConfronce/${i.id}`}>
-                                                                <i className="align-middle fmenu-icon tf-icons bx bx-edit  text-primary me-3 cursor-pointer"></i>
-                                                            </Link>
+                                                            {
+                                                                type === "meeting" ?
+                                                                    <Link to={`/editeMeetConfronce/${i.id}`}>
+                                                                        <i className="align-middle fmenu-icon tf-icons bx bx-edit  text-primary me-3 cursor-pointer"></i>
+                                                                    </Link>
+                                                                    :
+                                                                    <Link to={`/editeMeetFaceToFace/${i.id}`}>
+                                                                        <i className="align-middle fmenu-icon tf-icons bx bx-edit  text-primary me-3 cursor-pointer"></i>
+                                                                    </Link>
+                                                            }
                                                             {
                                                                 i.status === 2 ? <Link to={`/check-meet/${i.id}`} className='badge bg-label-danger cursor-pointer'>مشاهده اطلاعات جلسه</Link> :
                                                                     <>

@@ -34,6 +34,20 @@ export const editMeet = data => async dispatch => {
         errorMessage("لطفا دوباره تلاش کنید");
     }
 }
+export const editMeetFaceToFace = data => async dispatch => {
+    try {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: true } });
+        const res = await postDataAPI('FaceToFace/edit', data, token);
+        console.log(res);
+        if (res.status === 200) {
+            successMessage(res.data.message);
+        }
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+    } catch (err) {
+        dispatch({ type: GLOBALTYPES.LOADING, payload: { load: false } });
+        errorMessage("لطفا دوباره تلاش کنید");
+    }
+}
 
 export const createMeetVerbal = data => async dispatch => {
     try {

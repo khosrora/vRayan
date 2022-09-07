@@ -18,6 +18,7 @@ const ListMeets = () => {
     }, [])
 
     console.log(data);
+
     if (!data.length) return <p>جلسه ای برای نمایش وجود ندارد</p>
     return (
         <div className="content-wrapper">
